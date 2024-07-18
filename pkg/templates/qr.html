@@ -37,9 +37,11 @@
             </ul>
         </div>
     </nav>
-    <div class="container mt-4 m-auto">
-        <h2>Scan the QR to connect to the server</h2>
-        <img src="data:image/png;base64,{{.qr}}" class="img-fluid image-dashboard" />
+    <div class="container mt-4 d-flex flex-column">
+        <h2 class="m-auto">Scan the QR to connect to the server</h2>
+        <img src="data:image/png;base64,{{.qr}}" class="img-fluid image-dashboard mx-auto my-4" />
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -18,5 +18,7 @@
 # vendor/
 
 # Go workspace file
+.DS_Store
+cache/
 go.work
 go.work.sum

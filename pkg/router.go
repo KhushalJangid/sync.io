@@ -39,5 +39,7 @@ func Router() *gin.Engine {
 	r.GET("/download/:filename", DownloadFile)
 	r.GET("/preview/:filename", PreviewFile)
 	r.GET("/delete/:filename", DeleteFile)
+	r.GET("/downloadAll", DownloadAllFiles)
+	r.GET("/deleteAll", DeleteAllFiles)
 	return r
 }
