@@ -74,7 +74,7 @@ func displayError(c *gin.Context, message string, err error) {
 }
 
 func getDir() string {
-	path, err := filepath.Abs("cache")
+	path, err := filepath.Abs("sync.io-cache")
 	if err != nil {
 		panic(err)
 	}
