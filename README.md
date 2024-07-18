@@ -30,11 +30,11 @@
   <a href="#dart-about">About</a> &#xa0; | &#xa0; 
   <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
   <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
-  <a href="#question-how_to_use">How to use</a> &#xa0; | &#xa0;
-  <a href="#arrow_down-technologies">Download</a> &#xa0; | &#xa0;
+  <a href="#question-how-to-use">How to use</a> &#xa0; | &#xa0;
+  <a href="#arrow_down-downloads">Download</a> &#xa0; | &#xa0;
   <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
   <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
-  <a href="#🖼️-screenshots">Screenshots</a> &#xa0; | &#xa0;
+  <a href="#fireworks-screenshots">Screenshots</a> &#xa0; | &#xa0;
   <a href="#memo-license">License</a> &#xa0; | &#xa0;
   <a href="https://github.com/KhushalJangid" target="_blank">Author</a>
 </p>
@@ -109,7 +109,7 @@ $ ./build.bash
 $ go build .
 ```
 
-## 🖼️ Screenshots ##
+## :fireworks: Screenshots ##
 <img src="./screenshots/Screenshot 2024-07-18 at 10.07.08 AM.png" alt="Sync Io" />
 <img src="./screenshots/Screenshot 2024-07-18 at 10.08.04 AM.png" alt="Sync Io" />
 <img src="./screenshots/Screenshot 2024-07-18 at 10.08.12 AM.png" alt="Sync Io" />
