@@ -20,5 +20,6 @@
 # Go workspace file
 .DS_Store
 cache/
+sync.io-cache/
 go.work
 go.work.sum

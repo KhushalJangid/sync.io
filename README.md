@@ -75,12 +75,21 @@ Follow these steps to run the prebuilt executables:
 
 The executable binaries are available for:
 
+- MacOS (Intel)
+- MacOS (Apple silicone)
+- Linux (amd64/x86_64)
+- Linux (arm64)
+- Windows (amd64/x86_64)
+- Windows (arm64)
+
+[Download From Releases](https://github.com/KhushalJangid/sync.io/releases)
+<!-- 
 - [MacOS (intel)](build/Sync.io-darwin-amd64)
 - [MacOS (Apple silicone)](build/Sync.io-darwin-arm64)
 - [Linux (amd64)](build/Sync.io-linux-amd64)
 - [Linux (arm64)](build/Sync.io-linux-arm64)
 - [Windows (amd64)](build/Sync.io-windows-amd64.exe)
-- [Windows (amd64)](build/Sync.io-windows-arm64.exe)
+- [Windows (amd64)](build/Sync.io-windows-arm64.exe) -->
 
 ## :white_check_mark: Requirements ##
 
@@ -114,6 +123,7 @@ $ go build .
 <img src="./screenshots/Screenshot 2024-07-18 at 10.08.04 AM.png" alt="Sync Io" />
 <img src="./screenshots/Screenshot 2024-07-18 at 10.08.12 AM.png" alt="Sync Io" />
 <img src="./screenshots/Screenshot 2024-07-18 at 10.07.32 AM.png" alt="Sync Io" />
+<img src="./screenshots/Screenshot 2024-07-18 194444.png" alt="Sync Io" />
 
 ## :memo: License ##
 
