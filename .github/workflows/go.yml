@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: go mod tidy
 
+      - name: Clean build directory
+        run: rm -rf build && mkdir -p build
+
       - name: Build binary
         run: |
           mkdir -p build
@@ -123,7 +126,7 @@ jobs:
         run: |
           for file in build/*; do
             echo "Uploading $file"
-            gh release upload ${{ steps.create_release.outputs.upload_url }} "$file" --clobber
+            gh release upload ${{ steps.create_release.outputs.upload_url }} "$file"
           done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
