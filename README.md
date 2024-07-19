@@ -76,7 +76,7 @@ Follow these steps to run the prebuilt executables:
 The executable binaries are available for:
 
 - MacOS (Intel)
-- MacOS (Apple silicone)
+- MacOS (Apple Silicon)
 - Linux (amd64/x86_64)
 - Linux (arm64)
 - Windows (amd64/x86_64)
