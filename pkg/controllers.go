@@ -42,7 +42,6 @@ func UploadFiles(ctx *gin.Context) {
 	files := form.File["file"]
 	path := getDir()
 	for _, file := range files {
-		log.Println(file.Filename)
 		err := ctx.SaveUploadedFile(file, filepath.Join(path, file.Filename))
 		if err != nil {
 			displayError(ctx, "Error in Uploading Multiple file ,as the storage dir. not found ", err)
@@ -50,7 +49,8 @@ func UploadFiles(ctx *gin.Context) {
 	}
 
 	fmt.Println(ctx.PostForm("key"))
-	ctx.Redirect(http.StatusFound, "/files")
+	// ctx.Redirect(http.StatusFound, "/files")
+	ctx.JSON(http.StatusOK, map[string]string{"status": "Accepted"})
 
 }
 
