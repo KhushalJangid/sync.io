@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .dropzone {
+            min-height: 250px;
+            border: 2px dashed #007bff;
+            border-radius: 5px;
+            /* background: #f8f9fa; */
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .dropzone.dragover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        .container{
+            max-width: 800px;
+        }
+    </style>
 </head>
 <body class="bg-dark text-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,11 +52,11 @@
     <div class="container mt-4">
         <h2>Upload Files</h2>
         <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="file">Select files to upload:</label>
-                <input type="file" name="file" id="file" class="form-control" multiple required>
+                <input type="file" name="file" id="file" class="form-control" multiple required hidden>
+            <div class="dropzone my-4" id="dropzone">
+                Drag and drop files here or click to select files
             </div>
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success mt-3">
                 <i class="fas fa-upload"></i> Upload
             </button>
         </form>
@@ -68,11 +85,52 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        var dropzone = document.getElementById('dropzone');
+        var input = document.getElementById('file');
+        window.onload = function(){
+            input.value = null;
+        }
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            var form = event.target;
-            var files = document.getElementById('file').files;
-            document.getElementById('file').files = null;
+            var files = input.files;
+            input.value = null;
+            dropzone.innerText = "Drag and drop files here or click to select files";
+            handleFiles(files);
+        });
+        var loadTitle = function(e){
+            if (input.files.length == 1){
+                dropzone.innerText = input.files.item(0).name;
+            }else if(input.files.length == 0){
+                dropzone.innerText = "Drag and drop files here or click to select files";
+            }else{
+                dropzone.innerText = `${input.files.length} Files selected`;
+            }
+        };
+        input.addEventListener('change',loadTitle);
+
+        dropzone.addEventListener('dragover', function(event) {
+            event.preventDefault();
+            dropzone.classList.add('dragover');
+        });
+
+        dropzone.addEventListener('dragleave', function(event) {
+            dropzone.classList.remove('dragover');
+        });
+
+        dropzone.addEventListener('drop', function(event) {
+            event.preventDefault();
+            dropzone.classList.remove('dragover');
+            var files = event.dataTransfer.files;
+            // handleFiles(files);
+            input.files = files;
+            loadTitle(null);
+        });
+
+        dropzone.addEventListener('click', function() {
+            document.getElementById('file').click();
+        });
+
+        function handleFiles(files) {
             var progressContainer = document.getElementById('progressContainer');
             progressContainer.innerHTML = ''; // Clear previous progress bars
 
@@ -101,7 +159,7 @@
 
                 var progressBarContainer = document.createElement('div');
                 progressBarContainer.className = 'progress';
-                progressBarContainer.style.height = '25px';
+                progressBarContainer.style.height = '15px';
                 progressBarContainer.appendChild(progressBar);
 
                 var sizeInfo = document.createElement('div');
@@ -125,7 +183,7 @@
                     }
                 });
 
-                xhr.open('POST', form.action, true);
+                xhr.open('POST', '/upload', true);
                 xhr.send(formData);
 
                 xhr.onload = function() {
@@ -137,7 +195,7 @@
                     }
                 };
             });
-        });
+        }
     </script>
 </body>
 </html>
