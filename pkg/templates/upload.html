@@ -117,10 +117,10 @@
         }
         document.getElementById('uploadForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            var files = input.files;
+            console.log(input.files)
+            handleFiles(input.files);
             input.value = null;
             dropzone.innerText = "Drag and drop files here or click to select files";
-            handleFiles(files);
         });
         var loadTitle = function(e){
             if (input.files.length == 1){
@@ -161,7 +161,7 @@
 
             // Show the modal
             $('#progressModal').modal('show');
-
+            console.log(files)
             Array.from(files).forEach(function(file, index) {
                 var formData = new FormData();
                 formData.append('file', file);
