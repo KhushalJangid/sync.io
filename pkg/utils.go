@@ -3,50 +3,35 @@ package router
 import (
 	"archive/zip"
 	"encoding/base64"
-	"fmt"
 	"io"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mileusna/useragent"
 	"github.com/skip2/go-qrcode"
+	"golang.org/x/crypto/bcrypt"
 )
 
-func traceDevices(c *gin.Context, connected_devices map[string]map[string]string) {
-	remoteIp := c.RemoteIP()
-	val, ok := connected_devices[remoteIp]
-	currentTime := time.Now()
-	if ok {
-		val["last_connected"] = currentTime.Format("15:04:00 PM")
-	} else {
-		ua := useragent.Parse(c.GetHeader("user-agent"))
-		fmt.Println("New connection")
-		fmt.Println("Name:", ua.Name, "v", ua.Version)
-		fmt.Println("OS:", ua.OS, "v", ua.OSVersion)
-		fmt.Println("Device:", ua.Device)
-		var name string
-		if len(connected_devices) == 0 {
-			name = ua.Name + " (Host)"
-		} else {
-			name = ua.Name
-		}
-		connected_devices[remoteIp] = map[string]string{
-			"name":            name,
-			"os":              ua.OS,
-			"ip":              remoteIp,
-			"first_connected": currentTime.Format("15:04:00 PM"),
-			"last_connected":  currentTime.Format("15:04:00 PM"),
-		}
-	}
+func hashAndSalt(pwd []byte) string {
+
+	// Use GenerateFromPassword to hash & salt pwd.
+	// MinCost is just an integer constant provided by the bcrypt
+	// package along with DefaultCost & MaxCost.
+	// The cost can be any value you want provided it isn't lower
+	// than the MinCost (4)
+	hash, err := bcrypt.GenerateFromPassword(pwd, bcrypt.MinCost)
+	if err != nil {
+		log.Println(err)
+	} // GenerateFromPassword returns a byte slice so we need to
+	// convert the bytes to a string and return it
+	return string(hash)
 }
 
 func generateQR() string {
-	url := "http://" + GetOutboundIP().String() + ":8080"
+	url := "http://" + GetOutboundIP() + ":8080"
 	qrCode, _ := qrcode.New(url, qrcode.High)
 	bytes, err := qrCode.PNG(256)
 	if err != nil {
@@ -56,7 +41,7 @@ func generateQR() string {
 	return imgBase64Str
 }
 
-func GetOutboundIP() net.IP {
+func GetOutboundIP() string {
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +50,7 @@ func GetOutboundIP() net.IP {
 
 	localAddr := conn.LocalAddr().(*net.UDPAddr)
 
-	return localAddr.IP
+	return localAddr.IP.String()
 }
 
 func displayError(c *gin.Context, message string, err error) {
