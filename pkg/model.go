@@ -6,7 +6,9 @@ type Channel struct {
 }
 
 func setPassword(password string) {
-	channel.password = hashAndSalt([]byte(password))
+	if password != "" {
+		channel.password = hashAndSalt([]byte(password))
+	}
 }
 func verifyPassword(password string) bool {
 	hash := hashAndSalt([]byte(password))
