@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <!-- Title -->
+      <title>Files | Sync.io</title>
+
+      <!-- Icon -->
+      <link rel="icon" type="image/x-icon" href="./assets/images/logo.png">
+      
+      <!-- Stylesheet -->
+      <link rel="stylesheet" href="./build.css">
+
+      <!-- FlowBite Stylesheet -->
+      <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+      
+      <!-- Fontawesome Icon Kit -->
+      <script src="https://kit.fontawesome.com/e08d955214.js" crossorigin="anonymous"></script>
+
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Jersey+20+Charted&display=swap" rel="stylesheet">
+</head>
+
+<body>
+      <!-- FlowBite JS -->
+      <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+
+      <!-- NavBar -->
+      <nav class="fixed top-0 z-50 w-full bg-navbarLight dark:bg-navbarDark">
+            <div class="px-3 py-3 lg:px-5 lg:pl-3">
+                  <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-start">
+                              
+                              <!-- Hamburger -->
+                              <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden hover:bg-hover focus:outline-none focus:ring-2 focus:ring-focusState">
+                                    <span class="sr-only">Open sidebar</span>
+                                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                          <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                                    </svg>
+                              </button>
+                              
+                              <!-- Sync.io -->
+                              <a href="./index.html" class="flex ms-2 md:me-24 text-white text-4xl" style="font-family: 'Jersey 20 Charted', sans-serif; font-weight: 400; font-style: normal;">
+                                    &nbsp;Sync.io&nbsp;
+                              </a>
+                        </div>
+
+                        <!-- Theme Toggle -->
+                        <div class="themeSwitch">
+                              <div class="flex flex-col justify-center ml-3">
+                                    <input type="checkbox" name="light-switch" class="light-switch sr-only" />
+                                    <label class="relative cursor-pointer p-2 transition-transform transform dark:scale-110 dark:rotate-180" for="light-switch">
+                                          <svg class="dark:hidden transition-transform transform" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                                <path class="fill-slate-300" d="M7 0h2v2H7zM12.88 1.637l1.414 1.415-1.415 1.413-1.413-1.414zM14 7h2v2h-2zM12.95 14.433l-1.414-1.413 1.413-1.415 1.415 1.414zM7 14h2v2H7zM2.98 14.364l-1.413-1.415 1.414-1.414 1.414 1.415zM0 7h2v2H0zM3.05 1.706 4.463 3.12 3.05 4.535 1.636 3.12z" />
+                                                <path class="fill-slate-400" d="M8 4C5.8 4 4 5.8 4 8s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4Z" />
+                                          </svg>
+                                          <svg class="hidden dark:block transition-transform transform rotate-180" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+                                                <path class="fill-slate-400" d="M12.5 5a.625.625 0 0 1-.625-.625 1.252 1.252 0 0 0-1.25-1.25.625.625 0 1 1 0-1.25 1.252 1.252 0 0 0 1.25-1.25.625.625 0 1 1 1.25 0c.001.69.56 1.249 1.25 1.25a.625.625 0 1 1 0 1.25c-.69.001-1.249.56-1.25 1.25A.625.625 0 0 1 12.5 5Z" />
+                                                <path class="fill-slate-500" d="M6.2 1C3.2 1.8 1 4.6 1 7.9 1 11.8 4.2 15 8.1 15c3.3 0 6-2.2 6.9-5.2C9.7 11.2 4.8 6.3 6.2 1Z" />
+                                          </svg>
+                                          <span class="sr-only">Switch to light / dark version</span>
+                                    </label>
+                              </div>
+                        </div>
+
+                        <!-- Toggle JS -->
+                        <script>
+                              const ELE = document.documentElement;
+                              document.querySelectorAll(".themeSwitch").forEach((item) =>
+                              item.addEventListener("click", () => {
+                                    ELE.classList.toggle("dark");
+                                    ELE.classList.contains("dark") ?
+                                    localStorage.setItem("theme", "dark") :
+                                    localStorage.setItem("theme", "light");
+                                    })      
+                              );
+                              if (localStorage.getItem('theme') === 'dark') {
+                                    ELE.classList.add('dark');
+                              } else {
+                                    ELE.classList.remove('dark');
+                              }
+                        </script>
+                  </div>
+            </div>
+      </nav>
+
+      <!-- Side Navbar -->
+      <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-navbarLight dark:bg-navbarDark sm:translate-x-0" aria-label="Sidebar">
+            <div class="h-full px-3 pb-4 overflow-y-auto bg-navbarLight dark:bg-navbarDark">
+                  <ul class="space-y-2 font-medium">
+                        <!-- Home -->
+                        <li>
+                              <a href="./index.html" class="flex items-center p-2 text-white rounded-lg hover:bg-hoverLight dark:hover:bg-hovereDark">
+                                    <i class="fa-solid fa-house"></i>
+                                    <span class="ms-3">Home</span>
+                              </a>
+                        </li>
+
+                        <!-- Files -->
+                        <li>
+                              <a href="./files.html" class="flex items-center p-2 text-white rounded-lg hover:bg-hoverLight dark:hover:bg-hovereDark">
+                                    <i class="fa-solid fa-file"></i>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Files</span>
+                              </a>
+                        </li>
+                        
+                        <!-- Upload -->
+                        <li>
+                              <a href="./upload.html" class="flex items-center p-2 text-white rounded-lg hover:bg-hoverLight dark:hover:bg-hovereDark">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Upload</span>
+                              </a>
+                        </li>
+
+                        <!-- Connected Devices -->
+                        <li>
+                              <a href="./connectedDevices.html" class="flex items-center p-2 text-white rounded-lg hover:bg-hoverLight dark:hover:bg-hovereDark">
+                                    <i class="fas fa-network-wired"></i>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Connected Devices</span>
+                              </a>
+                        </li>
+
+                        <!-- Generate QR -->
+                        <li>
+                              <a href="./generateQR.html" class="flex items-center p-2 text-white rounded-lg hover:bg-hoverLight dark:hover:bg-hovereDark">
+                                    <i class="fa-solid fa-qrcode"></i>
+                                    <span class="flex-1 ms-3 whitespace-nowrap">Generate QR Code</span>
+                              </a>
+                        </li>
+                  </ul>
+            </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="p-4 sm:ml-64 bg-backgroundColorLight dark:bg-backgroundColorDark md:h-max h-screen">
+            <div class="p-4 relative overflow-x-auto shadow-md sm:rounded-lg mt-16">
+                  <table class="w-full text-sm text-left rtl:text-right text-white">
+                        <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-white bg-navbarLight dark:bg-navbarDark">
+                              Available Files
+                              <p class="mt-1 text-sm font-normal text-gray-300 dark:text-gray-400">
+                                    Kuch text daaldena
+                              </p>  
+                        </caption>  
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                              <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                          File Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                          Size
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                          <span class="sr-only">Download</span>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                          <span class="sr-only">Preview</span>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                          <span class="sr-only">Delete</span>
+                                    </th>
+                              </tr>
+                        </thead>
+
+                        <tbody id="tbody">
+                              {{range .files}}
+                              <tr class="bg-white border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                          {{.name}}
+                                    </th>
+                                    <td class="px-6 py-4 group text-black">
+                                          {{.size}}
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                          <a href="/download/{{ .name}}" class="font-medium text-blue-600 hover:underline">
+                                                Download
+                                          </a>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                          <a href="/preview/{{ .name}}" class="font-medium text-blue-600 hover:underline">
+                                                Preview
+                                          </a>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                          <a href="/delete/{{ .name}}" class="font-medium text-blue-600 hover:underline" onclick="return confirm('Are you sure you want to delete this file?')">Delete</a>
+                                    </td>
+                              </tr>
+                              {{end}}
+                        </tbody>
+                  </table>
+            </div>
+            
+            <!-- Delete All Button -->
+            <button>
+                  <div class="flex space-y-4 sm:flex-row sm:space-y-0 w-30 mt-2 mr-2">
+                        <a id="uploadButton" class="inline-flex py-2 px-3 text-base font-medium text-center text-white rounded-lg bg-red-600 hover:bg-red-800 hover:drop-shadow-2xl drop-shadow-md">
+                              <i class="fa-solid fa-trash pt-1"></i>
+                              &nbsp;Delete All
+                        </a>
+                  </div>
+            </button>
+
+            <!-- Download All Button -->
+            <button>
+                  <div class="flex space-y-4 sm:flex-row sm:space-y-0 w-30 mt-2">
+                        <a id="uploadButton" class="inline-flex py-2 px-3 text-base font-medium text-center text-fontColorDark dark:text-fontColorLight rounded-lg dark:bg-backgroundColorLight bg-backgroundColorDark hover:bg-hoverLight dark:hover:bg-hovereDark focus:ring-4 focus:ring-focusState hover:text-secondaryFontColor hover:drop-shadow-2xl drop-shadow-md dark:hover:text-white">
+                              <i class="fa-solid fa-download pt-1"></i>
+                              &nbsp;Download ZIP
+                        </a>
+                  </div>
+            </button>         
+      </div>
+      
+      <script>
+            const deleteAll = function (){
+                  let c = confirm('Are you sure you want to delete all files?');
+                  if (c) {
+                        window.location.href = "/deleteAll"
+                  }
+            }
+      </script>
+</body>
+
+</html>
