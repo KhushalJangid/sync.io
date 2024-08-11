@@ -119,11 +119,11 @@ $ go build .
 ```
 
 ## :fireworks: Screenshots ##
-<img src="./screenshots/Screenshot 2024-07-18 at 10.07.08 AM.png" alt="Sync Io" />
-<img src="./screenshots/Screenshot 2024-07-18 at 10.08.04 AM.png" alt="Sync Io" />
-<img src="./screenshots/Screenshot 2024-07-18 at 10.08.12 AM.png" alt="Sync Io" />
-<img src="./screenshots/Screenshot 2024-07-18 at 10.07.32 AM.png" alt="Sync Io" />
-<img src="./screenshots/Screenshot 2024-07-18 194444.png" alt="Sync Io" />
+<img src="./screenshots/Screenshot1.png" alt="Sync Io" />
+<img src="./screenshots/Screenshot2.png" alt="Sync Io" />
+<img src="./screenshots/Screenshot3.png" alt="Sync Io" />
+<img src="./screenshots/Screenshot4.png" alt="Sync Io" />
+<img src="./screenshots/Screenshot5.png" alt="Sync Io" />
 
 ## :memo: License ##
 
