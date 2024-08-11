@@ -1,9 +1,9 @@
-<!-- <div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Sync Io" />
+<div align="center" id="top"> 
+  <img src="./pkg/templates/static/assets/sync.io.svg" alt="Sync Io" />
 
   &#xa0;
 
-</div> -->
+</div>
 
 <h1 align="center">Sync.io</h1>
 
