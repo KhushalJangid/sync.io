@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Available Files</title>
+    <!-- Responsive meta tag for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Sync.io</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/files">Files</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/upload">Upload</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/connected_devices">Connected Devices</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/qr">Generate QR Code</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container my-4">
+        <h2>Available Files</h2>
+        <div>
+            <table class="table table-dark table-striped table-responsive-xl">
+                <thead>
+                    <tr>
+                        <!-- <th>Select</th> -->
+                        <th>File Name</th>
+                        <th>Size</th>
+                        <th>Download</th>
+                        <th>Preview</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {{range .files}}
+                    <tr>
+                        <!-- <td>
+                            <input type="checkbox" name="selected_files" value="{{ .name }}">
+                        </td> -->
+                        <td>{{.name}}</td>
+                        <td>{{.size}}</td>
+                        <td>
+                            <a href="/download/{{ .name}}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-file-download"></i> Download
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/preview/{{ .name}}" class="btn btn-sm btn-info">
+                                <i class="fas fa-eye"></i> Preview
+                            </a>
+                        </td>
+                        <td>
+                            <a href="/delete/{{ .name}}" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this file?')">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+
+            <!-- Button to delete selected files -->
+            <div class="d-flex">
+                <button type="submit" class="btn btn-sm btn-danger"
+                    onclick="deleteAll()">
+                    <i class="fas fa-trash"></i> Delete All
+                </button>
+                <a href="/downloadAll" class="btn btn-sm btn-primary mx-4">
+                    <i class="fas fa-file-download"></i> Download Zip
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const deleteAll = function (){
+            let c = confirm('Are you sure you want to delete all files?');
+            if (c){
+                window.location.href = "/deleteAll"
+            }
+        }
+    </script>
+</body>
+
+</html>

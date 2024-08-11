@@ -1,0 +1,18 @@
+{{template "base.html" .}}
+      <!-- Main Content -->
+      <div class="p-4 sm:ml-64 bg-backgroundColorLight dark:bg-backgroundColorDark md:h-max h-screen">        
+            <section class="p-4 mt-16">
+                  <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+                        <p class="mb-8 text-lg font-normal text-gray-900 dark:text-gray-300 lg:text-xl sm:px-16 lg:px-48">
+                              Scan the QR to connect to the server!
+                        </p>
+                        <!-- QR -->
+                        <div class="flex justify-center">
+                              <img src="data:image/png;base64,{{.qr}}" alt="" class="rounded-xl shadow-lg">
+                        </div>
+                  </div>
+            </section>     
+      </div>      
+</body>
+
+</html>
