@@ -19,6 +19,7 @@
 
 # Go workspace file
 .DS_Store
+build/
 cache/
 sync.io-cache/
 go.work
