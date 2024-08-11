@@ -34,7 +34,7 @@ func ListFiles(ctx *gin.Context) {
 		})
 
 	}
-	ctx.HTML(http.StatusOK, "file_list.html", gin.H{"files": output})
+	ctx.HTML(http.StatusOK, "files.html", gin.H{"files": output})
 }
 
 func UploadFiles(ctx *gin.Context) {
