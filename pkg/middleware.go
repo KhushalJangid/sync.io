@@ -50,3 +50,9 @@ func traceDevices(c *gin.Context) {
 		}
 	}
 }
+
+func cacheMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Cache-Control", "public, max-age=604800, immutable")
+	}
+}

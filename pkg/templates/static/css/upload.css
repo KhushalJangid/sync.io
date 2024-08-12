@@ -6,6 +6,7 @@
 #progressContainer{
 	max-height: 350px;
 	overflow: auto;
+    scrollbar-width: none;
 }
 #uploadModal{
     max-width: 90vw;

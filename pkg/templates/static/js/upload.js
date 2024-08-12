@@ -8,12 +8,12 @@ const minimizeModal = document.getElementById('minimizeModal');
 // Function to show the modal with animation
 const showmodal = () => {
     uploadModal.classList.remove('hidden');
-    uploadModal.classList.remove('translate-x-full', 'translate-y-full');
+    uploadModal.classList.remove( 'translate-y-full');
 }
 
 // Function to hide the modal
 closeModal.addEventListener('click', () => {
-    uploadModal.classList.add('translate-x-full', 'translate-y-full');
+    uploadModal.classList.add( 'translate-y-full');
     setTimeout(() => uploadModal.classList.add('hidden'), 300);
 });
 
@@ -44,28 +44,34 @@ document.head.insertAdjacentHTML('beforeend', `
     }
 </style>
 `);
+
 window.onload = function () {
     input.value = null;
 }
 uploadButton.addEventListener('click', function (event) {
-    if(input.files.length == 0){
+    if (input.files.length == 0) {
         return;
     }
     event.preventDefault();
     console.log(input.files)
     handleFiles(input.files);
     input.value = null;
-    // dropzone.innerText = "Drag and drop files here or click to select files";
     loadTitle();
 });
 var loadTitle = function (e) {
     if (input.files.length == 1) {
-        // dropzone.innerText = input.files.item(0).name;
         dropzone.innerHTML = `
-            <p class="mb-2 text-sm text-gray-500 dark:text-white">
-            <i class="fa-regular fa-file"></i>&nbsp${input.files.item(0).name}</p>`;
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                            class="bi bi-file-earmark w-8 h-8 mb-4 text-gray-500 dark:text-white" viewBox="0 0 16 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1"
+                                d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
+                    </svg>
+                    <p class="mb-2 text-sm text-gray-500 dark:text-white"><span
+                                class="font-semibold">${input.files.item(0).name}</p>
+                </div>`;
     } else if (input.files.length == 0) {
-        // dropzone.innerText = "Drag and drop files here or click to select files";
         dropzone.innerHTML = `
         <div class="flex flex-col items-center justify-center pt-5 pb-6">
             <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-white" aria-hidden="true"
@@ -78,11 +84,17 @@ var loadTitle = function (e) {
                         class="font-semibold">Click to upload</span> or drag and drop</p>
         </div>`;
     } else {
-        // dropzone.innerText = `${input.files.length} Files selected`;
-
         dropzone.innerHTML = `
-            <p class="mb-2 text-sm text-gray-500 dark:text-white">
-            <i class="fa-regular fa-folder"></i>&nbsp${input.files.item(0).name} and ${input.files.length-1} more files selected</p>`;
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                    class="bi bi-folder2 w-8 h-8 mb-4 text-gray-500 dark:text-white" viewBox="0 0 16 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1"
+                        d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5z" />
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-white"><span
+                        class="font-semibold">${input.files.item(0).name} and ${input.files.length - 1} more files selected</p>
+        </div>`;
     }
 };
 input.addEventListener('change', loadTitle);
@@ -100,7 +112,6 @@ dropzone.addEventListener('drop', function (event) {
     event.preventDefault();
     dropzone.classList.remove('dragover');
     var files = event.dataTransfer.files;
-    // handleFiles(files);
     input.files = files;
     loadTitle(null);
 });
@@ -112,72 +123,39 @@ dropzone.addEventListener('click', function () {
 function handleFiles(files) {
     var progressContainer = document.getElementById('progressContainer');
     progressContainer.innerHTML = ''; // Clear previous progress bars
-
-    // Show the modal
-    // $('#progressModal').modal('show');
     showmodal();
     console.log(files)
+    const csrf = document.getElementById('csrf').value;
     Array.from(files).forEach(function (file, index) {
         var formData = new FormData();
         formData.append('file', file);
-
-        // var progressWrapper = document.createElement('div');
-        // progressWrapper.className = 'mb-3';
-
-        // var fileInfo = document.createElement('div');
-        // fileInfo.className = 'mb-2';
-        // fileInfo.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
-
-        // var progressBar = document.createElement('div');
-        // progressBar.className = 'progress-bar';
-        // progressBar.style.width = '0%';
-        // progressBar.setAttribute('role', 'progressbar');
-        // progressBar.setAttribute('aria-valuenow', '0');
-        // progressBar.setAttribute('aria-valuemin', '0');
-        // progressBar.setAttribute('aria-valuemax', '100');
-        // progressBar.textContent = '0%';
-
-        // var progressBarContainer = document.createElement('div');
-        // progressBarContainer.className = 'progress';
-        // progressBarContainer.style.height = '15px';
-        // progressBarContainer.appendChild(progressBar);
-
-        // var sizeInfo = document.createElement('div');
-        // sizeInfo.className = 'text-right';
-        // sizeInfo.textContent = `0 / ${(file.size / 1024 / 1024).toFixed(2)} MB`;
-
-        // progressWrapper.appendChild(fileInfo);
-        // progressWrapper.appendChild(progressBarContainer);
-        // progressWrapper.appendChild(sizeInfo);
-        // progressContainer.appendChild(progressWrapper);
         var tile = new Tile(file);
-        tile.elements().forEach((e,i,arr)=>{
+        tile.elements().forEach((e, i, arr) => {
             progressContainer.append(e);
         })
 
         var xhr = new XMLHttpRequest();
+        tile.cancel(function (event){
+            console.info("Aborting upload");
+            xhr.abort();
+            tile.markFailed();
+        });
 
         xhr.upload.addEventListener('progress', function (event) {
             if (event.lengthComputable) {
                 var percentComplete = Math.round((event.loaded / event.total) * 100);
                 tile.updateProgress(percentComplete);
-                // progressBar.style.width = percentComplete + '%';
-                // progressBar.setAttribute('aria-valuenow', percentComplete);
-                // progressBar.textContent = percentComplete + '%';
-                // sizeInfo.textContent = `${(event.loaded / 1024 / 1024).toFixed(2)} / ${(file.size / 1024 / 1024).toFixed(2)} MB`;
             }
         });
 
         xhr.open('POST', '/upload', true);
+        xhr.setRequestHeader('X-CSRF-TOKEN', csrf);
         xhr.send(formData);
 
         xhr.onload = function () {
             if (xhr.status === 200) {
-                // progressBar.classList.add('bg-success');
                 tile.markSuccess();
             } else {
-                // progressBar.classList.add('bg-danger');
-                // progressBar.textContent = 'Upload failed';
                 tile.markFailed();
             }
         };
@@ -187,20 +165,14 @@ function handleFiles(files) {
 class Tile {
     constructor(file) {
         this.tile = document.createElement('div');
-        this.tile.className = 'mb-2 flex justify-between items-center';
+        this.tile.className = 'mt-4 flex justify-between items-center';
         this.tile.innerHTML = `
     <div class="flex items-center gap-x-3">
         <!-- File Icon -->
         <span class="size-8 flex justify-center items-center border border-gray-200 dark:border-gray-900 rounded-lg">
-                <!--<svg class="shrink-0 size-5 stroke-gray-200 dark:stroke-slate-300"
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                    viewBox="0 0 24 24" fill="none" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" x2="12" y1="3" y2="15"></line>
-                </svg>-->
-                <i class="fa-regular fa-file"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-file-earmark mr-2" viewBox="0 0 16 16">
+                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z"/>
+                </svg>
         </span>
 
         <!-- File Name and Size -->
@@ -228,24 +200,18 @@ class Tile {
                 class="relative dark:text-gray-200 focus:outline-none dark:focus:text-gray-800 
                 disabled:opacity-50 disabled:pointer-events-none 
                 text-slate-300 focus:text-neutral-200">
-                <!--<svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 6h18"></path>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                    <line x1="10" x2="10" y1="11" y2="17"></line>
-                    <line x1="14" x2="14" y1="11" y2="17"></line>
-                </svg>-->
-                <i class="fa-solid fa-xmark"></i>
-                <span class="sr-only">Delete</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
+                <span class="sr-only">Cancel</span>
         </button> 
     </div>`;
         this.progress = document.createElement('div');
         this.progress.className = "flex items-center gap-x-3 whitespace-nowrap";
         this.progress.innerHTML = `
-    <div class="flex w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700"
-        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="flex h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-neutral-700"
+        role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
         <div class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500 dark:bg-blue-500"
                 style="width: 0%"></div>
     </div>
@@ -253,20 +219,20 @@ class Tile {
         <span class="text-sm ">0%</span>
     </div>`;
     }
-    updateProgress(percent){
+    updateProgress(percent) {
         this.progress.getElementsByClassName('transition').item(0).style.width = `${percent}%`;
         this.progress.getElementsByTagName('span').item(0).innerText = `${percent}%`;
     }
-    elements(){
-        return [this.tile,this.progress];
+    elements() {
+        return [this.tile, this.progress];
     }
-    cancel(fn){
-        this.tile.getElementsByClassName('button').addEventListener('click',fn);
+    cancel(fn) {
+        this.tile.getElementsByTagName('button').item(0).addEventListener('click', fn);
     }
-    markSuccess(){
+    markSuccess() {
         this.progress.getElementsByClassName('transition').item(0).style.backgroundColor = 'green';
     }
-    markFailed(){
+    markFailed() {
         this.progress.getElementsByClassName('transition').item(0).style.backgroundColor = 'red';
     }
 }
