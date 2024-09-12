@@ -59,7 +59,7 @@ The following tools were used in this project:
 
 - [Golang](https://go.dev/)
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
-- [Bootstrap](https://getbootstrap.com/)
+- [Tailwind](https://tailwindcss.com/)
 ## :question: How to use ##
 
 Follow these steps to run the prebuilt executables:
