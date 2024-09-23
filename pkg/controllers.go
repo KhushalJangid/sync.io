@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -60,6 +61,9 @@ func DownloadFile(ctx *gin.Context) {
 		log.Fatal(err)
 	}
 	fileName := ctx.Param("filename")
+	if strings.Contains(fileName, "/") || strings.Contains(fileName, "\\") {
+		ctx.AbortWithStatus(400)
+	}
 
 	ctx.FileAttachment(filepath.Join(path, fileName), fileName)
 }
@@ -87,6 +91,9 @@ func PreviewFile(ctx *gin.Context) {
 		log.Fatal(err)
 	}
 	fileName := ctx.Param("filename")
+	if strings.Contains(fileName, "/") || strings.Contains(fileName, "\\") {
+		ctx.AbortWithStatus(400)
+	}
 
 	ctx.File(filepath.Join(path, fileName))
 }
@@ -107,6 +114,9 @@ func DeleteFile(ctx *gin.Context) {
 		log.Fatal(err)
 	}
 	fileName := ctx.Param("filename")
+	if strings.Contains(fileName, "/") || strings.Contains(fileName, "\\") {
+		ctx.AbortWithStatus(400)
+	}
 	e := os.Remove(filepath.Join(path, fileName))
 	if e == nil {
 		ctx.Redirect(http.StatusFound, "/files")
