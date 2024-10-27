@@ -24,6 +24,12 @@ func OpenBrowser(url string) {
 	switch runtime.GOOS {
 	case "linux":
 		err = exec.Command("xdg-open", url).Start()
+		if err != nil {
+			if _, ok := err.(*exec.Error); ok {
+				log.Println("xdg-open not found in PATH, please open the URL manually:", url)
+				return
+			}
+		}
 	case "windows":
 		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
 	case "darwin":
@@ -34,7 +40,6 @@ func OpenBrowser(url string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
 func hashAndSalt(pwd []byte) string {
 
