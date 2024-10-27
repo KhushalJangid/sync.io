@@ -1,6 +1,8 @@
 services:
-    app:
-        build:
-            context: .
-        ports:
-            - 8080:8080
+  app:
+    build:
+      context: .
+    network_mode: host ## This is required to access the host network to generate qr codes
+    volumes:
+      - ./syncio-cache:/sync.io-cache  ## This is the volume that will be mounted to the container with the data
+    user: "0"  ## Root is required to access the volume mounted to the container
