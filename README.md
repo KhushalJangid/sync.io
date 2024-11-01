@@ -118,6 +118,25 @@ $ ./build.bash
 $ go build .
 ```
 
+## :whale: Docker ##
+
+You can also run Sync.io using Docker Compose. Follow these steps:
+
+1. Make sure you have [Docker](https://www.docker.com/get-started) and [Docker Compose](https://docs.docker.com/compose/install/) installed on your machine.
+2. Clone the repository:
+  ```bash
+  $ git clone https://github.com/KhushalJangid/sync.io
+  $ cd sync.io
+  ```
+3. Build and run the Docker container using Docker Compose:
+  ```bash
+  $ docker-compose up --build -d
+  ```
+4. Open your browser and navigate to `http://localhost:8080` to start using Sync.io.
+
+This will run Sync.io in a Docker container using Docker Compose, making it easy to deploy and manage.
+
+
 ## :fireworks: Screenshots ##
 <img src="./screenshots/Screenshot1.png" alt="Sync Io" />
 <img src="./screenshots/Screenshot2.png" alt="Sync Io" />
