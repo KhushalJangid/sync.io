@@ -15,12 +15,12 @@ require (
 	github.com/anargu/gin-brotli v0.0.0-20220116052358-12bf532d5267
 	github.com/andybalholm/brotli v1.0.1 // indirect
 	github.com/dchest/uniuri v0.0.0-20160212164326-8902c56451e9 // indirect
-	github.com/gin-contrib/sessions v0.0.0-20190101140330-dc5246754963 // indirect
+	github.com/gin-contrib/sessions v0.0.0-20190101140330-dc5246754963
 	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/securecookie v1.1.1 // indirect
 	github.com/gorilla/sessions v1.1.3 // indirect
 	// github.com/justinas/nosurf v1.1.1 // indirect
-	github.com/utrack/gin-csrf v0.0.0-20190424104817-40fb8d2c8fca // indirect
+	github.com/utrack/gin-csrf v0.0.0-20190424104817-40fb8d2c8fca
 )
 
 require (

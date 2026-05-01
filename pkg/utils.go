@@ -68,6 +68,9 @@ func generateQR() string {
 }
 
 func GetOutboundIP() string {
+	if ip := os.Getenv("HOST_IP"); ip != "" {
+		return ip
+	}
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
 		log.Fatal(err)
@@ -157,6 +160,9 @@ func addFileToZip(zipWriter *zip.Writer, filename string) error {
 func getFilesInDir(dir string) ([]string, error) {
 	var files []string
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		if !info.IsDir() {
 			files = append(files, path)
 		}
