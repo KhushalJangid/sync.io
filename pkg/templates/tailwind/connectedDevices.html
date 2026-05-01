@@ -1,15 +1,15 @@
 {{template "base.html" .}}
 
       <!-- Main Section -->
-      <div class="p-4 sm:ml-64 bg-backgroundColorLight dark:bg-backgroundColorDark md:h-max h-screen">        
+      <div class="p-4 sm:ml-64 bg-backgroundColorLight dark:bg-backgroundColorDark md:h-max h-screen">
             <div class="p-4 relative overflow-x-auto shadow-md sm:rounded-lg mt-16">
                   <table class="w-full text-sm text-left rtl:text-right text-white">
                         <caption class="p-5 text-lg font-semibold text-left rtl:text-right text-white bg-navbarLight dark:bg-navbarDark">
                               Connected Devices
                               <p class="mt-1 text-sm font-normal text-gray-300 dark:text-gray-400">
                                     Devices which were connected to this server
-                              </p>  
-                        </caption>  
+                              </p>
+                        </caption>
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                               <tr>
                                     <th scope="col" class="px-6 py-3">
@@ -19,11 +19,16 @@
                                           Operating System
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                          IP Addres
+                                          IP Address
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                           Connected At
                                     </th>
+                                    {{if .isHost}}
+                                    <th scope="col" class="px-6 py-3">
+                                          Actions
+                                    </th>
+                                    {{end}}
                               </tr>
                         </thead>
 
@@ -52,12 +57,25 @@
                                     <td class="px-6 py-4 text-black">
                                           {{.connected.Str}}
                                     </td>
+                                    {{if $.isHost}}
+                                    <td class="px-6 py-4">
+                                          {{if not .isHost.Flag}}
+                                          <a href="/revoke/{{.token.Str}}"
+                                                onclick="return confirm('Revoke access for this device?')"
+                                                class="font-medium text-red-500 hover:underline">
+                                                Revoke
+                                          </a>
+                                          {{else}}
+                                          <span class="text-gray-400 text-xs">Host</span>
+                                          {{end}}
+                                    </td>
+                                    {{end}}
                               </tr>
                               {{end}}
                         </tbody>
                   </table>
-            </div>   
-      </div>      
+            </div>
+      </div>
 </body>
 
 </html>

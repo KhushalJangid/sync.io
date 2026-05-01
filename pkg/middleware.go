@@ -1,54 +1,74 @@
 package router
 
 import (
+	"net/http"
 	"time"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/mileusna/useragent"
 )
 
-func sessionMiddleware() gin.HandlerFunc {
-	return traceDevices
+func authMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		session := sessions.Default(c)
+		token, _ := session.Get("auth_token").(string)
+
+		channel.mu.RLock()
+		_, valid := channel.connected_devices[token]
+		deviceCount := len(channel.connected_devices)
+		noPassword := channel.password == ""
+		channel.mu.RUnlock()
+
+		if valid {
+			c.Next()
+			return
+		}
+
+		if deviceCount == 0 {
+			c.Redirect(http.StatusFound, "/setpassword")
+			c.Abort()
+			return
+		}
+
+		// No password set: auto-issue a token so the user gets in seamlessly.
+		if noPassword {
+			issueToken(c, false)
+			c.Next()
+			return
+		}
+
+		c.Redirect(http.StatusFound, "/verifypassword")
+		c.Abort()
+	}
 }
 
-func traceDevices(c *gin.Context) {
-	remoteIp := c.RemoteIP()
-	connected_devices := channel.connected_devices
-	_, ok := connected_devices[remoteIp]
-	currentTime := time.Now()
-	if ok {
-		// val["last_connected"] = StringBool{Str: currentTime.Format("15:04:00 PM")}
-		return
-	} else {
-		ua := useragent.Parse(c.GetHeader("user-agent"))
-		print(ua.Device)
-		if len(connected_devices) == 0 {
-			device_map := make(map[string]StringBool)
-
-			device_map["name"] = StringBool{Str: ua.Name + " (Host)"}
-			device_map["os"] = StringBool{Str: ua.OS}
-			device_map["mobile"] = StringBool{Flag: ua.Mobile}
-			device_map["ip"] = StringBool{Str: remoteIp}
-			device_map["connected"] = StringBool{Str: currentTime.Format("15:04:00 PM")}
-			// device_map["last_connected"] = StringBool{Str: currentTime.Format("15:04:00 PM")}
-			connected_devices[remoteIp] = device_map
-			c.Redirect(302, "/setpassword")
-		} else {
-			device_map := make(map[string]StringBool)
-
-			device_map["name"] = StringBool{Str: ua.Name}
-			device_map["os"] = StringBool{Str: ua.OS}
-			device_map["mobile"] = StringBool{Flag: ua.Mobile}
-			device_map["ip"] = StringBool{Str: remoteIp}
-			device_map["connected"] = StringBool{Str: currentTime.Format("15:04:00 PM")}
-			// device_map["last_connected"] = StringBool{Str: currentTime.Format("15:04:00 PM")}
-
-			connected_devices[remoteIp] = device_map
-			if channel.password != "" {
-				c.Redirect(302, "/verifypassword")
-			}
-		}
+// issueToken creates a new auth token for the device, stores it server-side,
+// and writes it to the session cookie.
+func issueToken(c *gin.Context, isHost bool) {
+	ua := useragent.Parse(c.GetHeader("user-agent"))
+	token := generateToken()
+	name := ua.Name
+	if isHost {
+		name += " (Host)"
 	}
+	device := map[string]StringBool{
+		"name":      {Str: name},
+		"os":        {Str: ua.OS},
+		"mobile":    {Flag: ua.Mobile},
+		"ip":        {Str: c.RemoteIP()},
+		"connected": {Str: time.Now().Format("15:04:00 PM")},
+		"isHost":    {Flag: isHost},
+		"token":     {Str: token},
+	}
+
+	channel.mu.Lock()
+	channel.connected_devices[token] = device
+	channel.mu.Unlock()
+
+	session := sessions.Default(c)
+	session.Set("auth_token", token)
+	session.Save()
 }
 
 func cacheMiddleware() gin.HandlerFunc {

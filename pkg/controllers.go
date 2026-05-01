@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -108,6 +109,31 @@ func DeleteAllFiles(ctx *gin.Context) {
 	}
 	ctx.Redirect(http.StatusFound, "/files")
 }
+func RevokeDevice(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	myToken, _ := session.Get("auth_token").(string)
+
+	channel.mu.RLock()
+	me, ok := channel.connected_devices[myToken]
+	channel.mu.RUnlock()
+	if !ok || !me["isHost"].Flag {
+		ctx.AbortWithStatus(http.StatusForbidden)
+		return
+	}
+
+	token := ctx.Param("token")
+	if token == myToken {
+		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	channel.mu.Lock()
+	delete(channel.connected_devices, token)
+	channel.mu.Unlock()
+
+	ctx.Redirect(http.StatusFound, "/connected_devices")
+}
+
 func DeleteFile(ctx *gin.Context) {
 	path, err := filepath.Abs("sync.io-cache")
 	if err != nil {
