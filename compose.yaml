@@ -2,7 +2,10 @@ services:
   app:
     build:
       context: .
-    network_mode: host ## This is required to access the host network to generate qr codes
+    ports:
+      - "8080:8080"
+    environment:
+      - HOST_IP=${HOST_IP:-}  ## Set this to your machine's LAN IP for correct QR code generation (e.g. HOST_IP=192.168.1.10 docker compose up)
     volumes:
       - ./syncio-cache:/sync.io-cache  ## This is the volume that will be mounted to the container with the data
     user: "0"  ## Root is required to access the volume mounted to the container
